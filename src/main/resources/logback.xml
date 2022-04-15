@@ -1,0 +1,42 @@
+<configuration>
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- %-4relative [%thread] %-5level %logger{35} - %msg %n -->
+			<pattern>%msg%n%throwable</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>%msg%n%throwable</pattern>
+		</encoder>
+		  <file>C:\Desarrollos\jboss_logs\AdministradorQA.log</file>
+		
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				  <fileNamePattern>C:\Desarrollos\jboss_logs\AdministradorQA.%d%i.log</fileNamePattern> 
+				<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>30MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<append>true</append>
+	</appender>
+	<root level="ERROR">
+	<!-- (Loggear en consola y log de servidor)Descomentar para ambiente de desarrollo y comentar al subir a produccion -->
+	<appender-ref ref="STDOUT" /> 
+	<appender-ref ref="FILE" />
+	</root>
+
+	<logger name="c.g.apis.*" additivity="false">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="s.d.s.w.p.*" additivity="false">
+		<appender-ref ref="FILE" />
+	</logger>
+
+</configuration>
